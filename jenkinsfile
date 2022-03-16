@@ -1,0 +1,78 @@
+pipeline {
+    agent any
+    
+     environment {
+        String branchName = "main"
+        // https://github.com/Flav1-ann/MyRestoSpring
+        String repoUrl = "https://github.com/Thomas-Lacomblez/demo-springboot.git"
+        registry = "thomaslpro/myresto"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
+    /*
+    triggers {
+        pollSCM '* * * * *'
+    }*/
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    sh("pwd")
+                    sh("ls -ahl")
+                    echo 'Cloning files from (branch: "' + branchName + '" )'
+                    echo 'Start cloning the github repository from (branch: "' + branchName + ' ") .....'
+                    // The below will clone your repo and will be checked out to master branch by default.
+                    git branch: branchName, url: repoUrl
+                    sh("ls -ahl")
+                    echo 'repository clone on branch master done.'
+                }
+            }
+            }
+        stage('Test') {
+            agent {
+                docker { 
+                    image 'maven:3.8.4-openjdk-11-slim' 
+                    reuseNode true
+                }
+            }
+            steps {
+                script {
+                    
+                    sh("pwd")
+                    echo 'starting spring boot application unit test .....'
+                    sh("cd /var/jenkins_home/workspace/test")
+                    sh("mvn test")
+                    echo 'spring boot application unit test doned'
+                }
+            }
+        }
+        stage('Docker image build') {
+            steps {
+                script {
+                    echo 'Start building docker image of the application ......'
+                    dockerImage = docker.build registry + ":latest"
+                    echo 'Docker image build done.'
+                }
+            }
+        }
+        /*
+        stage('Docker image push on docker hub') {
+            steps {
+                script {
+                    echo 'Pushing the docker image application builded to docker hub.'
+
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                    echo 'Docker image build done.'
+                }
+              
+            }
+        }*/
+        stage('Remove Unused docker image') {
+            steps{
+                sh "docker rmi $registry:latest"
+            }
+        }
+    }
+}
