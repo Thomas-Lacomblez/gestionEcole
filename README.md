@@ -5,8 +5,6 @@
 1. [Prérequis](#prérequis)
 2. [Lancer l'application avec docker & docker-compose](#docker)
 3. [Lancer l'application sur une Ec2 aws avec terraform et ansible](#terraform)
-4. [Tester notre application](#test)
-
 
 ## Prérequis <a name="prérequis"></a>
 
