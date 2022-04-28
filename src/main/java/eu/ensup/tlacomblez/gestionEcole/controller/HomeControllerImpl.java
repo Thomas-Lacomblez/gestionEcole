@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import eu.ensup.tlacomblez.gestionEcole.domain.Directeur;
 import eu.ensup.tlacomblez.gestionEcole.domain.Etudiant;
+import eu.ensup.tlacomblez.gestionEcole.domain.Responsable;
 import eu.ensup.tlacomblez.gestionEcole.service.DirecteurService;
 import eu.ensup.tlacomblez.gestionEcole.service.EtudiantService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +28,10 @@ public class HomeControllerImpl implements HomeController {
 
     @Autowired
     DirecteurService directeurService;
+    
     @Autowired
     EtudiantService etudiantService;
+
 
     @Override
     @GetMapping("/")
@@ -62,7 +65,18 @@ public class HomeControllerImpl implements HomeController {
         directeurService.createDirecteur(directeur);
         log.info("Directeur créer ! ");
         return "home";
-    }/**/
+    }
+    @GetMapping("/addResponsableTmp")
+    public String addResponsableTmp() {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode("123");
+        Responsable directeur = new Responsable("Lacomblez", "Thomas", "Lacomblez.thomas@gmail.com", encodedPassword , "1 Sq. Benjamin Franklin, 78180", "0634779411", LocalDate.of(1999, 8, 22));
+        
+        //directeurService(directeur);
+        log.info("Directeur créer ! ");
+        return "home";
+    }
+    /**/
     /* */
     @GetMapping("/addEtudianttmp")
     public String addEtudianttmp() {

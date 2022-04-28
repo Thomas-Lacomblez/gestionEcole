@@ -22,7 +22,7 @@ public class DirecteurService {
         return directeurDao.findAll();
     }
 
-    public Directeur gDirecteurByEmail(String email) {
+    public Directeur getDirecteurByEmail(String email) {
         return directeurDao.findByEmail(email);
     }
 }
