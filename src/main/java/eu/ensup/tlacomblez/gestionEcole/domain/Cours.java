@@ -23,6 +23,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Table(name = "Cours")
+
+/**
+ * It's a class that represents a course
+ */
 public class Cours {
     @Id
     @Column(nullable = false, updatable = false)

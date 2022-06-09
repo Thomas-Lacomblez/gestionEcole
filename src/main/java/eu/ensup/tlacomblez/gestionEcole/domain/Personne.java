@@ -24,6 +24,10 @@ import lombok.ToString;
 @ToString
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+
+/**
+ * It's a class that represents a person
+ */
 public class Personne {
     @Id
     @Column(nullable = false, updatable = false)

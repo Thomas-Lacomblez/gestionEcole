@@ -33,29 +33,57 @@ public class HomeControllerImpl implements HomeController {
     EtudiantService etudiantService;
 
 
+    /**
+     * redirect to Home page with thymeleaf
+     * @return String
+     */
     @Override
     @GetMapping("/")
     public String viewHome() {
         return "home";
     }
 
+    
+    /**
+     * redirect to login page with thymeleaf
+     * @return String
+     */
     @Override
     @GetMapping("/login")
+
     public String login() {
         return "login";
     }
 
+
+    /** 
+     * redirect to with page for "Etudiant" creation with thymeleaf
+     * @param model model object used by thymleaf
+     * @return String
+    */
     @GetMapping("/creationEtudiant")
     public String creationEtudiant(Model model) {
         model.addAttribute("etudiant", new Etudiant());
         return "creationEtudiant";
     }
+
+    /**
+     * handler method to get data from "Etudiant" creation page to create the "Etudiant"
+     * 
+     * @param etudiant etudiant info you want to create
+     * @param model model object used by thymleaf
+     * @return String
+     */
     @PostMapping("/perfom_creationEtudiant")
     public String creationEtudiantPost(@ModelAttribute Etudiant etudiant, Model model){
         etudiantService.creerEtudiant(etudiant);
         return "/etudiants";
     }
-    /* */
+
+    /**
+     * Endpoint to create a "Directeur" and rediredt to Home Page
+     * @return String
+     */
     @GetMapping("/addDirecteurtmp")
     public String addDirecteurtmp() {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -66,6 +94,11 @@ public class HomeControllerImpl implements HomeController {
         log.info("Directeur créer ! ");
         return "home";
     }
+
+    /**
+     * Endpoint to create a "Responsable" and rediredt to Home Page
+     * @return String
+     */
     @GetMapping("/addResponsableTmp")
     public String addResponsableTmp() {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -76,8 +109,12 @@ public class HomeControllerImpl implements HomeController {
         log.info("Directeur créer ! ");
         return "home";
     }
-    /**/
-    /* */
+
+
+    /**
+     * Endpoint to create a "Etudiant" and rediredt to Home Page
+     * @return String
+     */
     @GetMapping("/addEtudianttmp")
     public String addEtudianttmp() {
         Etudiant etudiant = new Etudiant("Lacomblez", "Thomas", "Lacomblez.thomas@gmail.com" , "1 Sq. Benjamin Franklin, 78180", "0634779411", LocalDate.of(1999, 8, 22));
@@ -85,10 +122,16 @@ public class HomeControllerImpl implements HomeController {
         etudiantService.creerEtudiant(etudiant);
         log.info("Etudiant créer ! ");
         return "home";
-    }/* */
+    }
 
+
+    /**
+     * redirect to the page that list all the "Etudiant" that exists with thymleaf
+     * @param model model object used by thymleaf
+     * @return String
+     */
     @GetMapping("/etudiants")
-    public String listUsers(Model model) {
+    public String listEtudiants(Model model) {
         List<Etudiant> listEtudiant = etudiantService.getAllEtudiant();
         model.addAttribute("listEtudiant", listEtudiant);
         

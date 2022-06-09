@@ -13,6 +13,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+
+/**
+ * Directeur is a Personne
+ */
 public class Directeur extends Personne {
     private String password;
     private Roles role;

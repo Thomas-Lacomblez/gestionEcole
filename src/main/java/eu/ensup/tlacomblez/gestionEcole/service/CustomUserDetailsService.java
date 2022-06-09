@@ -11,6 +11,9 @@ import eu.ensup.tlacomblez.gestionEcole.domain.CustomUserDetails;
 import eu.ensup.tlacomblez.gestionEcole.domain.Directeur;
 import eu.ensup.tlacomblez.gestionEcole.domain.Responsable;
  
+/**
+ * It implements the UserDetailsService interface and overrides the loadUserByUsername() method
+ */
 public class CustomUserDetailsService implements UserDetailsService {
  
     @Autowired
@@ -19,7 +22,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private ResponsableDao responsableDao;
 
+
     @Override
+    // A method that is called by Spring Security to load the user details.
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Directeur userD = directeurDao.findByEmail(username);
         Responsable userR = responsableDao.findByEmail(username);

@@ -12,6 +12,10 @@ import eu.ensup.tlacomblez.gestionEcole.Enums.Roles;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+
+/**
+ * A DTO (Data Transfer Object) class.
+ */
 public class UserDto {
     private Long id;
     private String username;

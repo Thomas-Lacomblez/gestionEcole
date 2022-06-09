@@ -21,12 +21,18 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @ToString
 @Entity
+
+/**
+ * Etudiant is a student and he is a Personne
+ */
 public class Etudiant extends Personne {
 
     @ManyToMany
+
     private Set<Cours> listCours;
 
     @ManyToOne
+    // A list of Cours
     private Ecole ecole;
 
     public Etudiant(String nom, String prenom, String email, String adresse, String telephone, LocalDate dateNaissance) {

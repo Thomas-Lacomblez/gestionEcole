@@ -14,6 +14,9 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
+/**
+ * It creates a class called Responsable that extends the Personne class.
+ */
 public class Responsable extends Personne {
     private String password;
     private Roles role;
