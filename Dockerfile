@@ -1,5 +1,4 @@
 FROM hashicorp/terraform:latest
 
-ENTRYPOINT[""]
-
+ENTRYPOINT [ "" ]
 CMD ["tail", "-f", "/dev/null"]
