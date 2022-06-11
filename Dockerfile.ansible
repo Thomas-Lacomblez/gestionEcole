@@ -5,8 +5,6 @@ FROM alpine:latest
 ARG JenkinsUserId
 ARG JenkinsGroupId
 
-//do your stuff here
-
 #create Ansible config directory
 RUN set -xe \
     && mkdir -p /etc/ansible
