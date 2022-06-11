@@ -1,7 +1,12 @@
-FROM python:alpine
+FROM ubuntu
 
-RUN apk update && apk add --no-cache musl-dev libffi-dev openssl-dev make gcc python py2-pip python-dev
-RUN pip install cffi
-RUN pip install ansible
+ENV TZ=France/Paris
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get update -y
+RUN apt-get install -y curl unzip
+
+RUN apt install software-properties-common -y
+RUN add-apt-repository --yes --update ppa:ansible/ansible
+RUN apt install ansible -y
 
 CMD ["tail", "-f", "/dev/null"]
