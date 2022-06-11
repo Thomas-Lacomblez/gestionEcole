@@ -9,4 +9,10 @@ RUN apt install software-properties-common -y
 RUN add-apt-repository --yes --update ppa:ansible/ansible
 RUN apt install ansible -y
 
+RUN useradd --create-home -s /bin/bash vagrant
+RUN echo -n 'ansible:ansible' | chpasswd
+RUN echo 'vagrant ALL = NOPASSWD: ALL' > /etc/sudoers.d/vagrant
+
+USER ansible
+
 CMD ["tail", "-f", "/dev/null"]
