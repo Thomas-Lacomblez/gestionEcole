@@ -2,13 +2,20 @@ FROM ubuntu
 
 ENV TZ=France/Paris
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt-get update -y
-RUN apt-get install -y curl unzip
+RUN apt-get update && \
+    apt-get -y upgrade && \
+    apt-get install -y \
+    sudo
 
 RUN apt install software-properties-common -y
 RUN add-apt-repository --yes --update ppa:ansible/ansible
 RUN apt install ansible -y
 
-USER root
+RUN useradd -ms /bin/bash ansible && \
+    usermod -aG sudo ansible
+# New added for disable sudo password
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+USER ansible
+WORKDIR /home/ansible
 
 CMD ["tail", "-f", "/dev/null"]
