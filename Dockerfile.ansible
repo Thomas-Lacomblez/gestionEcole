@@ -1,6 +1,6 @@
 FROM python:alpine
 
-RUN apk update && apk add --no-cache python3 musl-dev libffi-dev openssl-dev make gcc python py2-pip python-dev
+RUN apk update && apk add --no-cache musl-dev libffi-dev openssl-dev make gcc python py2-pip python-dev
 RUN pip install cffi
 RUN pip install ansible
 
