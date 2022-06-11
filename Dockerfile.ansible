@@ -1,20 +1,41 @@
-FROM ubuntu
+FROM alpine:latest
 
-ENV TZ=France/Paris
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt-get update && \
-    apt-get -y upgrade && \
-    apt-get install -y \
-    sudo
+#pick up provided ARGs for the bild
 
-RUN apt install software-properties-common -y
-RUN add-apt-repository --yes --update ppa:ansible/ansible
-RUN apt install ansible -y
+ARG JenkinsUserId
+ARG JenkinsGroupId
 
-RUN useradd -ms /bin/bash ansible && \
-    usermod -aG sudo ansible
-# New added for disable sudo password
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-USER ansible
+//do your stuff here
+
+#create Ansible config directory
+RUN set -xe \
+    && mkdir -p /etc/ansible
+
+#create Ansible tmp directory
+RUN set -xe \
+    && mkdir -p /.ansible/tmp
+
+#set ANSIBLE_LOCAL_TEMP
+ENV ANSIBLE_LOCAL_TEMP /.ansible/tmp
+
+#create Ansible cp directory
+RUN set -xe \
+    && mkdir -p /.ansible/cp
+
+#set ANSIBLE_SSH_CONTROL_PATH_DIR
+ENV ANSIBLE_SSH_CONTROL_PATH_DIR /.ansible/cp
+
+# Create Jenkins group and user
+RUN if ! id $JenkinsUserId; then \
+    groupadd -g ${JenkinsGroupId} jenkins; \
+    useradd jenkins -u ${JenkinsUserId} -g jenkins --shell /bin/bash --create-home; \
+  else \
+    addgroup --gid 1000 -S jenkins && adduser --uid 1000 -S jenkins -G jenkins; \
+  fi
+
+RUN addgroup jenkins root
+
+# Tell docker that all future commands should run as the appuser user
+USER jenkins
 
 CMD ["tail", "-f", "/dev/null"]
