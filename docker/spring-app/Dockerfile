@@ -1,7 +1,7 @@
 FROM maven:3.8.4-openjdk-11-slim as build
 RUN mkdir gestionEcole
 WORKDIR /gestionEcole
-COPY ./ ./
+COPY ../../ ./
 RUN mvn clean package spring-boot:repackage
 RUN ls
 RUN ls ./target
