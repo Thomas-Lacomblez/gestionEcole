@@ -11,7 +11,7 @@ RUN apt install ansible -y
 
 RUN useradd --create-home -s /bin/bash ansible
 RUN echo -n 'ansible:ansible' | chpasswd
-RUN echo 'ansible ALL = NOPASSWD: ALL' > /etc/sudoers.d/ansible
+RUN echo 'ansible ALL = NOPASSWD: ALL' > /etc/sudoers.d
 
 USER ansible
 
