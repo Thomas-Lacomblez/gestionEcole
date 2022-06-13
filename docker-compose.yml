@@ -16,9 +16,7 @@ services:
       - spring-network
   spring-app:
     container_name: spring-app
-    build: 
-      context: ./
-      dockerfile: ./docker/spring-app/Dockerfile
+    image: thomaslpro/gestion_ecole
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     ports:
