@@ -14,10 +14,21 @@ public class EtudiantService {
     @Autowired
     EtudiantDao etudiantRepository;
 
+    /**
+     * It creates a new student in the database
+     * 
+     * @param etudiant the object to be created
+     * @return Etudiant
+     */
     public Etudiant creerEtudiant(Etudiant etudiant) {
         return etudiantRepository.save(etudiant);
     }
 
+    /**
+     * It returns a list of all the students in the database
+     * 
+     * @return A list of all the students in the database.
+     */
     public List<Etudiant> getAllEtudiant() {
         return etudiantRepository.findAll();
     }
